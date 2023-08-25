@@ -5,9 +5,9 @@ package br.dev.pedrolamarao.structure;
  */
 public class MultiNode<T>
 {
-    MultiNode<T>[] links;
+    private MultiNode<T>[] links;
 
-    T value;
+    private T value;
 
     public MultiNode (MultiNode<T>[] links, T value)
     {

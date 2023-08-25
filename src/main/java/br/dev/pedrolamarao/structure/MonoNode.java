@@ -5,9 +5,9 @@ package br.dev.pedrolamarao.structure;
  */
 public class MonoNode<T>
 {
-    MonoNode<T> link;
+    private MonoNode<T> link;
 
-    T value;
+    private T value;
 
     public MonoNode (MonoNode<T> link, T value)
     {

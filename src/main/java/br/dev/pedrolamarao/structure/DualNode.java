@@ -5,11 +5,11 @@ package br.dev.pedrolamarao.structure;
  */
 public class DualNode<T>
 {
-    DualNode<T> first;
+    private DualNode<T> first;
 
-    DualNode<T> second;
+    private DualNode<T> second;
 
-    T value;
+    private T value;
 
     public DualNode (DualNode<T> first, DualNode<T> second, T value)
     {
