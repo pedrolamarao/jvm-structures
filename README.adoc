@@ -1,0 +1,5 @@
+= jvm-structures
+:author: Pedro Lamarão <pedro.lamarao@prodist.com.br>
+:icons: font
+
+Study on data structures for JVM programs.
