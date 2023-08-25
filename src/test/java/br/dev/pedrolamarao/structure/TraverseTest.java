@@ -1,9 +1,5 @@
 package br.dev.pedrolamarao.structure;
 
-import br.dev.pedrolamarao.structure.iterator.UniIterator;
-import br.dev.pedrolamarao.structure.node.UniNode;
-import br.dev.pedrolamarao.structure.traversable.Traverse;
-import br.dev.pedrolamarao.structure.traversable.UniLinearTraversable;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -20,7 +16,18 @@ public class TraverseTest
 
     @ParameterizedTest
     @MethodSource("structures")
-    void count (UniLinearTraversable<Object> structure)
+    void accumulate (TraversableUniLinear<Object> structure)
+    {
+        assertThat( Traverse.accumulate( TraversableArray.empty(), (a,x) -> ++a, 0) )
+            .isEqualTo(0);
+
+        assertThat( Traverse.accumulate( structure, (a,x) -> ++a, 0) )
+            .isEqualTo(size);
+    }
+
+    @ParameterizedTest
+    @MethodSource("structures")
+    void count (TraversableUniLinear<Object> structure)
     {
         assertThat(Traverse.count(TraversableArray.empty()))
             .isEqualTo(0);
@@ -31,7 +38,7 @@ public class TraverseTest
 
     @ParameterizedTest
     @MethodSource("structures")
-    void countIf (UniLinearTraversable<Object> structure)
+    void countIf (TraversableUniLinear<Object> structure)
     {
         assertThat(Traverse.countIf(TraversableArray.empty(), Integer.class::isInstance))
             .isEqualTo(0);
@@ -42,7 +49,7 @@ public class TraverseTest
 
     @ParameterizedTest
     @MethodSource("structures")
-    void find (UniLinearTraversable<Object> structure)
+    void find (TraversableUniLinear<Object> structure)
     {
         final var target = structure.forward().value();
 
@@ -57,7 +64,7 @@ public class TraverseTest
 
     @ParameterizedTest
     @MethodSource("structures")
-    void findIf (UniLinearTraversable<Object> structure)
+    void findIf (TraversableUniLinear<Object> structure)
     {
         final var target = structure.forward().value();
 
@@ -72,7 +79,7 @@ public class TraverseTest
 
     @ParameterizedTest
     @MethodSource("structures")
-    void visit (UniLinearTraversable<Object> structure)
+    void visit (TraversableUniLinear<Object> structure)
     {
         final var counter = new AtomicInteger();
 
@@ -85,15 +92,17 @@ public class TraverseTest
         assertThat(counter.get()).isEqualTo(size);
     }
 
-    static List<UniLinearTraversable<Object>> structures ()
+    static List<TraversableUniLinear<Object>> structures ()
     {
-        UniNode<Object> node = null;
-        for (int i = 0; i != size; ++i) {
-            node = new UniNode<>(node, new Object());
-        }
+        final var array = new Object[size];
+        for (int i = 0; i != array.length; ++i) array[i] = new Object();
+
+        MonoNode<Object> node = null;
+        for (int i = 0; i != size; ++i) node = new MonoNode<>(node, new Object());
 
         return List.of(
-            TraversableUniNode.of(node)
+            TraversableArray.of(array),
+            TraversableMonoNodes.of(node)
         );
     }
 }

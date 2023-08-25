@@ -1,13 +1,11 @@
-package br.dev.pedrolamarao.structure.traversable;
-
-import br.dev.pedrolamarao.structure.iterator.UniIterator;
+package br.dev.pedrolamarao.structure;
 
 /**
  * Unidirectional linear-traversable structure.
  *
  * @param <T> element type
  */
-public interface UniLinearTraversable<T>
+public interface TraversableUniLinear<T>
 {
     /**
      * Forward traversal start iterator.

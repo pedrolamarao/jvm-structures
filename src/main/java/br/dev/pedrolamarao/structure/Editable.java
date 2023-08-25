@@ -1,6 +1,4 @@
-package br.dev.pedrolamarao.structure.editable;
-
-import br.dev.pedrolamarao.structure.iterator.Iterator;
+package br.dev.pedrolamarao.structure;
 
 /**
  * Editable structure.

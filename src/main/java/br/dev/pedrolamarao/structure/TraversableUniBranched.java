@@ -1,13 +1,11 @@
-package br.dev.pedrolamarao.structure.traversable;
-
-import br.dev.pedrolamarao.structure.iterator.UniIterator;
+package br.dev.pedrolamarao.structure;
 
 /**
  * Unidirectional branch-traversable structure.
  *
  * @param <T> element type
  */
-public interface UniBranchTraversable <T>
+public interface TraversableUniBranched<T>
 {
     /**
      * Pre-ordered branch traversal start iterator.

@@ -1,6 +1,4 @@
-package br.dev.pedrolamarao.structure.editable;
-
-import br.dev.pedrolamarao.structure.iterator.UniIterator;
+package br.dev.pedrolamarao.structure;
 
 import java.util.Comparator;
 import java.util.function.Function;
@@ -17,7 +15,7 @@ public class Edit
      * @param order      sort ordering
      * @param <T>        structure element type
      */
-    public static <T> void bubbleSort (UniLinearEditable<T> structure, Comparator<T> order)
+    public static <T> void bubbleSort (EditableUniLinear<T> structure, Comparator<T> order)
     {
         boolean sorted;
         do {
@@ -39,7 +37,7 @@ public class Edit
      * @param value      value
      * @param <T>        structure element type
      */
-    public static <T> void fill (UniLinearEditable<T> structure, T value)
+    public static <T> void fill (EditableUniLinear<T> structure, T value)
     {
         for (var i = structure.forward(); i != null; i = i.next()) {
             structure.set(i,value);
@@ -53,7 +51,7 @@ public class Edit
      * @param order      sort ordering
      * @param <T>        structure element type
      */
-    public static <T> void selectSort (UniLinearEditable<T> structure, Comparator<T> order)
+    public static <T> void selectSort (EditableUniLinear<T> structure, Comparator<T> order)
     {
         for (var i = structure.forward(); i != null; i = i.next()) {
             for (var j = i.next(); j != null; j = j.next()) {
@@ -70,7 +68,7 @@ public class Edit
      * @param operator   transformation
      * @param <T>        structure element type
      */
-    public static <T> void transform (UniLinearEditable<T> structure, Function<T,T> operator)
+    public static <T> void transform (EditableUniLinear<T> structure, Function<T,T> operator)
     {
         for (var i = structure.forward(); i != null; i = i.next()) {
             structure.set(i,operator.apply(i.value()));

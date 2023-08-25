@@ -1,4 +1,4 @@
-package br.dev.pedrolamarao.structure.iterator;
+package br.dev.pedrolamarao.structure;
 
 /**
  * Position in unidirectional traversals.

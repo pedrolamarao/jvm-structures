@@ -1,24 +1,22 @@
 package br.dev.pedrolamarao.structure;
 
-import br.dev.pedrolamarao.structure.editable.BiLinearEditable;
-import br.dev.pedrolamarao.structure.iterator.BiIterator;
-import br.dev.pedrolamarao.structure.iterator.Iterator;
+import static java.util.Objects.requireNonNull;
 
-public class EditableArray<T> implements BiLinearEditable<T>
+public class EditableArray<T> implements EditableUniLinear<T>, EditableBiLinear<T>
 {
-    T[] array;
-
     int limit;
+
+    T[] root;
 
     public EditableArray ()
     {
-        this.array = null;
+        this.root = null;
         this.limit = 0;
     }
 
-    public EditableArray (T[] array, int limit)
+    public EditableArray (T[] root, int limit)
     {
-        this.array = array;
+        this.root = requireNonNull(root);
         this.limit = limit;
     }
 
@@ -32,35 +30,32 @@ public class EditableArray<T> implements BiLinearEditable<T>
     @Override
     public BiIterator<T> forward ()
     {
-        return limit == 0 ? null : new IterableArray<>(array, 0, limit - 1);
+        return limit == 0 ? null : new IterableArray<>(root, 0, limit - 1);
     }
 
     @Override
     public BiIterator<T> backward ()
     {
-        return limit == 0 ? null : new IterableArray<>(array, limit - 1, limit - 1);
+        return limit == 0 ? null : new IterableArray<>(root, limit - 1, limit - 1);
     }
 
     //
 
     @Override
-    public void set (Iterator<T> iterator, T value)
+    public void set (Iterator<T> position, T value)
     {
-        if (! (iterator instanceof IterableArray<T> arrayIt)) throw new RuntimeException("illegal iterator");
-        array[arrayIt.position()] = value;
+        if (! (position instanceof IterableArray<T> p))
+            throw new RuntimeException("illegal iterator");
+        root[p.position()] = value;
     }
 
     @Override
     public void swap (Iterator<T> x, Iterator<T> y)
     {
-        if (! (x instanceof IterableArray<T> arrayX && y instanceof IterableArray<T> arrayY)) throw new RuntimeException("illegal iterators");
-        swap(array,arrayX.position(),arrayY.position());
-    }
-
-    static <U> void swap (U[] array, int x, int y)
-    {
-        final var tmp = array[x];
-        array[x] = array[y];
-        array[y] = tmp;
+        if (! (x instanceof IterableArray<T> xx && y instanceof IterableArray<T> yy))
+            throw new RuntimeException("illegal iterators");
+        final var tmp = root[xx.position()];
+        root[xx.position()] = root[yy.position()];
+        root[yy.position()] = tmp;
     }
 }

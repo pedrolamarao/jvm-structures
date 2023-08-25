@@ -1,11 +1,8 @@
 package br.dev.pedrolamarao.structure;
 
-import br.dev.pedrolamarao.structure.iterator.UniIterator;
-import br.dev.pedrolamarao.structure.traversable.UniLinearTraversable;
-
 import static java.util.Objects.requireNonNull;
 
-public record TraversableArray<T>(T[] array, int limit) implements UniLinearTraversable<T>
+public record TraversableArray<T>(T[] root, int limit) implements TraversableUniLinear<T>
 {
     public static <U> TraversableArray<U> empty ()
     {
@@ -20,6 +17,6 @@ public record TraversableArray<T>(T[] array, int limit) implements UniLinearTrav
 
     public UniIterator<T> forward ()
     {
-        return limit == 0 ? null : new IterableArray<>(array, 0, limit - 1);
+        return limit == 0 ? null : new IterableArray<>(root, 0, limit - 1);
     }
 }
