@@ -1,0 +1,9 @@
+[*.java]
+
+charset = utf-8
+indent_size = 4
+indent_style = space
+
+ij_java_class_brace_style = next_line
+ij_java_method_brace_style = next_line
+ij_java_space_before_method_parentheses = true
