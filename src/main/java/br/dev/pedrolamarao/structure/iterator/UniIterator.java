@@ -5,7 +5,7 @@ package br.dev.pedrolamarao.structure.iterator;
  *
  * @param <T>  element type
  */
-public interface UniIterator<T>
+public interface UniIterator<T> extends Iterator<T>
 {
     /**
      * Next position.
@@ -13,11 +13,4 @@ public interface UniIterator<T>
      * @return iterator, or null if end of traversal
      */
     UniIterator<T> next ();
-
-    /**
-     * Current element.
-     *
-     * @return element
-     */
-    T value ();
 }

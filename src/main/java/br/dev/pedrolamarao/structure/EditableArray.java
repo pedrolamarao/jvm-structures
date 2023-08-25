@@ -1,9 +1,10 @@
 package br.dev.pedrolamarao.structure;
 
-import br.dev.pedrolamarao.structure.editable.UniEditable;
-import br.dev.pedrolamarao.structure.iterator.UniIterator;
+import br.dev.pedrolamarao.structure.editable.BiLinearEditable;
+import br.dev.pedrolamarao.structure.iterator.BiIterator;
+import br.dev.pedrolamarao.structure.iterator.Iterator;
 
-public class EditableArray<T> implements UniEditable<T>
+public class EditableArray<T> implements BiLinearEditable<T>
 {
     T[] array;
 
@@ -23,28 +24,40 @@ public class EditableArray<T> implements UniEditable<T>
 
     public static <U> EditableArray<U> of (U[] array)
     {
-        return new EditableArray<U>(array,array.length);
+        return new EditableArray<>(array,array.length);
     }
 
     //
 
-    public UniIterator<T> forward ()
+    @Override
+    public BiIterator<T> forward ()
     {
         return limit == 0 ? null : new IterableArray<>(array, 0, limit - 1);
     }
 
-    //
-
-    public void swap (UniIterator<T> x, UniIterator<T> y)
+    @Override
+    public BiIterator<T> backward ()
     {
-        if (x instanceof IterableArray<T> arrayX && y instanceof IterableArray<T> arrayY) {
-            swap(arrayX.position(),arrayY.position());
-        } else {
-            throw new RuntimeException("illegal iterators");
-        }
+        return limit == 0 ? null : new IterableArray<>(array, limit - 1, limit - 1);
     }
 
-    void swap (int x, int y)
+    //
+
+    @Override
+    public void set (Iterator<T> iterator, T value)
+    {
+        if (! (iterator instanceof IterableArray<T> arrayIt)) throw new RuntimeException("illegal iterator");
+        array[arrayIt.position()] = value;
+    }
+
+    @Override
+    public void swap (Iterator<T> x, Iterator<T> y)
+    {
+        if (! (x instanceof IterableArray<T> arrayX && y instanceof IterableArray<T> arrayY)) throw new RuntimeException("illegal iterators");
+        swap(array,arrayX.position(),arrayY.position());
+    }
+
+    static <U> void swap (U[] array, int x, int y)
     {
         final var tmp = array[x];
         array[x] = array[y];

@@ -3,28 +3,28 @@ package br.dev.pedrolamarao.structure.traversable;
 import br.dev.pedrolamarao.structure.iterator.UniIterator;
 
 /**
- * Tree traversable structure.
+ * Unidirectional branch-traversable structure.
  *
  * @param <T> element type
  */
-public interface TreeTraversable<T>
+public interface UniBranchTraversable <T>
 {
     /**
-     * Pre-ordered traversal start iterator.
+     * Pre-ordered branch traversal start iterator.
      *
      * @return iterator
      */
     UniIterator<T> preOrder ();
 
     /**
-     * In-ordered traversal start iterator.
+     * In-ordered branch traversal start iterator.
      *
      * @return iterator
      */
     UniIterator<T> inOrder ();
 
     /**
-     * Post-ordered traversal start iterator.
+     * Post-ordered branch traversal start iterator.
      *
      * @return iterator
      */
