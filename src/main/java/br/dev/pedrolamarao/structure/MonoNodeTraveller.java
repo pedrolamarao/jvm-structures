@@ -30,8 +30,8 @@ public record MonoNodeTraveller<T>(MonoNode<T> root) implements TraversableUniLi
         return new MonoNodeTraveller<>(node);
     }
 
-    public UniIterator<T> forward ()
+    public UniTraversal<T> forward ()
     {
-        return root == null ? null : new MonoNodeIterator<>(root);
+        return root == null ? null : new MonoNodeTraversal<>(root);
     }
 }

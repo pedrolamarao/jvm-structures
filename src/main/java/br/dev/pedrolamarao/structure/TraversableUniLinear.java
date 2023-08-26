@@ -16,7 +16,7 @@
 package br.dev.pedrolamarao.structure;
 
 /**
- * Unidirectional linear-traversable structure.
+ * Linear unidirectional traversable structure.
  *
  * @param <T> element type
  */
@@ -27,5 +27,5 @@ public interface TraversableUniLinear<T>
      *
      * @return iterator
      */
-    UniIterator<T> forward ();
+    UniTraversal<T> forward ();
 }

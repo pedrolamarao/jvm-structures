@@ -16,16 +16,16 @@
 package br.dev.pedrolamarao.structure;
 
 /**
- * Position in bidirectional traversals.
+ * State of (i.e. position) a traversal.
  *
- * @param <T>  element type
+ * @param <T> element type
  */
-public interface BiIterator<T> extends UniIterator<T>
+public interface Traversal<T>
 {
     /**
-     * Previous position.
+     * Element at this position.
      *
-     * @return iterator, or null if end of traversal
+     * @return element
      */
-    BiIterator<T> previous ();
+    T value ();
 }

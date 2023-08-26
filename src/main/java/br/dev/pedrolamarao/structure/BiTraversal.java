@@ -15,23 +15,17 @@
 
 package br.dev.pedrolamarao.structure;
 
-record ArrayIterator<T>(T[] array, int position, int last) implements BiIterator<T>
+/**
+ * State of (i.e. position) a bidirectional traversal.
+ *
+ * @param <T>  element type
+ */
+public interface BiTraversal<T> extends UniTraversal<T>
 {
-    @Override
-    public BiIterator<T> next ()
-    {
-        return position == last ? null : new ArrayIterator<>(array, position + 1, last);
-    }
-
-    @Override
-    public BiIterator<T> previous ()
-    {
-        return position == 0 ? null : new ArrayIterator<>(array, position - 1, last);
-    }
-
-    @Override
-    public T value ()
-    {
-        return array[position];
-    }
+    /**
+     * Previous position.
+     *
+     * @return iterator, or null if end of traversal
+     */
+    BiTraversal<T> previous ();
 }

@@ -16,7 +16,7 @@
 package br.dev.pedrolamarao.structure;
 
 /**
- * Unidirectional branch-traversable structure.
+ * Branched unidirectional traversable structure.
  *
  * @param <T> element type
  */
@@ -27,19 +27,19 @@ public interface TraversableUniBranched<T>
      *
      * @return iterator
      */
-    UniIterator<T> preOrder ();
+    UniTraversal<T> preOrder ();
 
     /**
      * In-ordered branch traversal start iterator.
      *
      * @return iterator
      */
-    UniIterator<T> inOrder ();
+    UniTraversal<T> inOrder ();
 
     /**
      * Post-ordered branch traversal start iterator.
      *
      * @return iterator
      */
-    UniIterator<T> postOrder ();
+    UniTraversal<T> postOrder ();
 }

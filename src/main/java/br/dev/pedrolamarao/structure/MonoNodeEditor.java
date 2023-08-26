@@ -39,9 +39,9 @@ public class MonoNodeEditor<T> implements EditableUniLinear<T>
     //
 
     @Override
-    public UniIterator<T> forward ()
+    public UniTraversal<T> forward ()
     {
-        return root == null ? null : new MonoNodeIterator<>(root);
+        return root == null ? null : new MonoNodeTraversal<>(root);
     }
 
     MonoNode<T> previous (MonoNode<T> target)
@@ -55,9 +55,9 @@ public class MonoNodeEditor<T> implements EditableUniLinear<T>
     //
 
     @Override
-    public void erase (Iterator<T> position)
+    public void erase (Traversal<T> position)
     {
-        if (! (position instanceof MonoNodeIterator<T>(MonoNode<T> node)))
+        if (! (position instanceof MonoNodeTraversal<T>(MonoNode<T> node)))
             throw new RuntimeException("incompatible position");
         final var previous = previous(node);
         if (previous == null)
@@ -66,17 +66,17 @@ public class MonoNodeEditor<T> implements EditableUniLinear<T>
     }
 
     @Override
-    public void set (Iterator<T> position, T value)
+    public void set (Traversal<T> position, T value)
     {
-        if (! (position instanceof MonoNodeIterator<T>(MonoNode<T> node)))
+        if (! (position instanceof MonoNodeTraversal<T>(MonoNode<T> node)))
             throw new RuntimeException("incompatible iterator");
         node.value(value);
     }
 
     @Override
-    public void swap (Iterator<T> x, Iterator<T> y)
+    public void swap (Traversal<T> x, Traversal<T> y)
     {
-        if (! (x instanceof MonoNodeIterator<T>(MonoNode<T> xx) && y instanceof MonoNodeIterator<T>(MonoNode<T> yy)))
+        if (! (x instanceof MonoNodeTraversal<T>(MonoNode<T> xx) && y instanceof MonoNodeTraversal<T>(MonoNode<T> yy)))
             throw new RuntimeException("incompatible iterator");
         final T tmp = x.value();
         xx.value(yy.value());

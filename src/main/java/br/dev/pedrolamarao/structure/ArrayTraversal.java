@@ -15,17 +15,23 @@
 
 package br.dev.pedrolamarao.structure;
 
-/**
- * Position in traversal.
- *
- * @param <T> element type
- */
-public interface Iterator <T>
+record ArrayTraversal<T>(T[] array, int position, int last) implements BiTraversal<T>
 {
-    /**
-     * Element at position.
-     *
-     * @return element
-     */
-    T value ();
+    @Override
+    public BiTraversal<T> next ()
+    {
+        return position == last ? null : new ArrayTraversal<>(array, position + 1, last);
+    }
+
+    @Override
+    public BiTraversal<T> previous ()
+    {
+        return position == 0 ? null : new ArrayTraversal<>(array, position - 1, last);
+    }
+
+    @Override
+    public T value ()
+    {
+        return array[position];
+    }
 }

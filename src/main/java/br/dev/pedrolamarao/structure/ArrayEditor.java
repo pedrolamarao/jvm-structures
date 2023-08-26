@@ -79,22 +79,22 @@ public class ArrayEditor<T> implements EditableUniLinear<T>, EditableBiLinear<T>
     //
 
     @Override
-    public BiIterator<T> forward ()
+    public BiTraversal<T> forward ()
     {
-        return limit == 0 ? null : new ArrayIterator<>(root, 0, limit - 1);
+        return limit == 0 ? null : new ArrayTraversal<>(root, 0, limit - 1);
     }
 
     @Override
-    public BiIterator<T> backward ()
+    public BiTraversal<T> backward ()
     {
-        return limit == 0 ? null : new ArrayIterator<>(root, limit - 1, limit - 1);
+        return limit == 0 ? null : new ArrayTraversal<>(root, limit - 1, limit - 1);
     }
 
     //
 
-    public T get (Iterator<T> position)
+    public T get (Traversal<T> position)
     {
-        if (! (position instanceof ArrayIterator<T> p))
+        if (! (position instanceof ArrayTraversal<T> p))
             throw new RuntimeException("illegal iterator");
         return get(p.position());
     }
@@ -107,9 +107,9 @@ public class ArrayEditor<T> implements EditableUniLinear<T>, EditableBiLinear<T>
     }
 
     @Override
-    public void erase (Iterator<T> position)
+    public void erase (Traversal<T> position)
     {
-        if (! (position instanceof ArrayIterator<T> p))
+        if (! (position instanceof ArrayTraversal<T> p))
             throw new RuntimeException("illegal iterator");
         erase(p.position());
     }
@@ -123,9 +123,9 @@ public class ArrayEditor<T> implements EditableUniLinear<T>, EditableBiLinear<T>
     }
 
     @Override
-    public void set (Iterator<T> position, T value)
+    public void set (Traversal<T> position, T value)
     {
-        if (! (position instanceof ArrayIterator<T> p))
+        if (! (position instanceof ArrayTraversal<T> p))
             throw new RuntimeException("illegal iterator");
         set(p.position(),value);
     }
@@ -138,9 +138,9 @@ public class ArrayEditor<T> implements EditableUniLinear<T>, EditableBiLinear<T>
     }
 
     @Override
-    public void swap (Iterator<T> x, Iterator<T> y)
+    public void swap (Traversal<T> x, Traversal<T> y)
     {
-        if (! (x instanceof ArrayIterator<T> xx && y instanceof ArrayIterator<T> yy))
+        if (! (x instanceof ArrayTraversal<T> xx && y instanceof ArrayTraversal<T> yy))
             throw new RuntimeException("illegal iterators");
         swap(xx.position(),yy.position());
     }

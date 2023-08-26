@@ -22,7 +22,7 @@ package br.dev.pedrolamarao.structure;
  */
 public interface Editable<T>
 {
-    void erase (Iterator<T> position);
+    void erase (Traversal<T> position);
 
     /**
      * Set value at position.
@@ -30,7 +30,7 @@ public interface Editable<T>
      * @param position  position
      * @param value     new value
      */
-    void set (Iterator<T> position, T value);
+    void set (Traversal<T> position, T value);
 
     /**
      * Swap the position of two elements.
@@ -38,5 +38,5 @@ public interface Editable<T>
      * @param x  element
      * @param y  element
      */
-    void swap (Iterator<T> x, Iterator<T> y);
+    void swap (Traversal<T> x, Traversal<T> y);
 }

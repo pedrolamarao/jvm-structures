@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TraverseTest
+public class TraverseObjectTest
 {
     static final int size = 1024 * 1024;
 
@@ -60,7 +60,7 @@ public class TraverseTest
         final var target = structure.forward().value();
         assertThat(Traverse.find(structure, target))
             .isNotNull()
-            .extracting(UniIterator::value)
+            .extracting(UniTraversal::value)
             .isEqualTo(target);
     }
 
@@ -71,7 +71,7 @@ public class TraverseTest
         final var target = structure.forward().value();
         assertThat(Traverse.findIf(structure, it -> it == target))
             .isNotNull()
-            .extracting(UniIterator::value)
+            .extracting(UniTraversal::value)
             .isEqualTo(target);
     }
 

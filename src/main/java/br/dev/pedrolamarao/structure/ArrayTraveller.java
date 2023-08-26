@@ -30,8 +30,8 @@ public record ArrayTraveller<T>(T[] root, int limit) implements TraversableUniLi
         return new ArrayTraveller<>(array, array.length);
     }
 
-    public UniIterator<T> forward ()
+    public UniTraversal<T> forward ()
     {
-        return limit == 0 ? null : new ArrayIterator<>(root, 0, limit - 1);
+        return limit == 0 ? null : new ArrayTraversal<>(root, 0, limit - 1);
     }
 }

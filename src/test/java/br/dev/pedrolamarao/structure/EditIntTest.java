@@ -22,42 +22,55 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Comparator;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class EditEmptyTest
+public class EditIntTest
 {
     static final int size = 10240;
 
     @ParameterizedTest
     @MethodSource("structures")
-    void fill (EditableUniLinear<Object> structure)
+    void erase (EditableUniLinear<Integer> structure)
     {
-        final var element = new Object();
+        final var position = structure.forward().next();
+        assertThat(structure.forward().next()).isEqualTo(position);
+        structure.erase(position);
+        assertThat(structure.forward().next()).isNotEqualTo(position);
+        assertThat(Traverse.count(structure)).isEqualTo(size-1);
+    }
+
+    @ParameterizedTest
+    @MethodSource("structures")
+    void fill (EditableUniLinear<Integer> structure)
+    {
+        final var element = Integer.MAX_VALUE;
+        assertFalse( Traverse.every(structure,it->it==element) );
         Edit.fill(structure,element);
+        assertTrue( Traverse.every(structure,it->it==element) );
     }
 
     @ParameterizedTest
     @MethodSource("structures")
-    void sort (EditableUniLinear<Object> structure)
+    void sort (EditableUniLinear<Integer> structure)
     {
-        final var ordering = Comparator.comparingInt(Object::hashCode);
-        Edit.sort(structure,ordering);
-        assertTrue( Traverse.sorted(structure,ordering) );
+        Edit.sort(structure,Comparator.naturalOrder());
+        assertTrue( Traverse.sorted(structure,Comparator.naturalOrder()) );
     }
 
-    @ParameterizedTest
-    @MethodSource("structures")
-    void transform (EditableUniLinear<Object> structure)
+    List<EditableUniLinear<Integer>> structures ()
     {
-        Edit.transform(structure,x->x);
-    }
+        final var array = new Integer[size];
+        for (int i = 0; i != array.length; ++i) array[i] = -i;
 
-    static List<EditableUniLinear<Object>> structures ()
-    {
+        MonoNode<Integer> node = null;
+        for (int i = 0; i != size; ++i) node = new MonoNode<>(node,-i);
+
         return List.of(
-            ArrayEditor.from(Object.class, new Object[0]),
-            MonoNodeEditor.empty()
+            ArrayEditor.from(Integer.class,array),
+            MonoNodeEditor.of(node)
         );
     }
 }

@@ -30,8 +30,8 @@ public record DualNodeTraveller<T>(DualNode<T> root) implements TraversableUniLi
         return new DualNodeTraveller<>(node);
     }
 
-    public BiIterator<T> forward ()
+    public BiTraversal<T> forward ()
     {
-        return root == null ? null : new DualNodeIterator<>(root);
+        return root == null ? null : new DualNodeLinearTraversal<>(root);
     }
 }

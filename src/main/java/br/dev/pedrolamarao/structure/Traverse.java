@@ -37,11 +37,38 @@ public class Traverse
      */
     public static <A,T> A accumulate (final TraversableUniLinear<T> structure, final BiFunction<A, T, A> operator, final A initial)
     {
+        return accumulate(structure.forward(),operator,initial);
+    }
+
+    public static <A,T> A accumulate (final UniTraversal<T> start, final BiFunction<A, T, A> operator, final A initial)
+    {
         A tmp = initial;
-        for (var i = structure.forward(); i != null; i = i.next()) {
+        for (var i = start; i != null; i = i.next()) {
             tmp = operator.apply(tmp, i.value());
         }
         return tmp;
+    }
+
+    /**
+     * Test if any element matches predicate.
+     *
+     * @param structure  traversable structure
+     * @param operator   predicate
+     * @return           true if and only if any element match predicate
+     * @param <T>        structure element type
+     */
+    public static <T> boolean any (final TraversableUniLinear<T> structure, final Predicate<T> operator)
+    {
+        return any(structure.forward(),operator);
+    }
+
+    public static <T> boolean any (final UniTraversal<T> start, final Predicate<T> operator)
+    {
+        for (var i = start; i != null; i = i.next()) {
+            if (operator.test(i.value()))
+                return true;
+        }
+        return false;
     }
 
     /**
@@ -52,8 +79,13 @@ public class Traverse
      */
     public static long count (final TraversableUniLinear<?> structure)
     {
+        return count(structure.forward());
+    }
+
+    public static long count (final UniTraversal<?> start)
+    {
         long counter = 0;
-        for (var i = structure.forward(); i != null; i = i.next()) {
+        for (var i = start; i != null; i = i.next()) {
             ++counter;
         }
         return counter;
@@ -69,8 +101,13 @@ public class Traverse
      */
     public static <T> long countIf (final TraversableUniLinear<T> structure, final Predicate<T> operator)
     {
+        return countIf(structure.forward(),operator);
+    }
+
+    public static <T> long countIf (final UniTraversal<T> start, final Predicate<T> operator)
+    {
         long counter = 0;
-        for (var i = structure.forward(); i != null; i = i.next()) {
+        for (var i = start; i != null; i = i.next()) {
             if (operator.test(i.value())) ++counter;
         }
         return counter;
@@ -86,7 +123,12 @@ public class Traverse
      */
     public static <T> boolean every (final TraversableUniLinear<T> structure, final Predicate<T> operator)
     {
-        for (var i = structure.forward(); i != null; i = i.next()) {
+        return every(structure.forward(),operator);
+    }
+
+    public static <T> boolean every (final UniTraversal<T> start, final Predicate<T> operator)
+    {
+        for (var i = start; i != null; i = i.next()) {
             if (! operator.test(i.value()))
                 return false;
         }
@@ -101,9 +143,14 @@ public class Traverse
      * @return           element, or null if not found
      * @param <T>        structure element type
      */
-    public static <T> UniIterator<T> find (final TraversableUniLinear<T> structure, final T target)
+    public static <T> UniTraversal<T> find (final TraversableUniLinear<T> structure, final T target)
     {
-        for (var i = structure.forward(); i != null; i = i.next()) {
+        return find(structure.forward(),target);
+    }
+
+    public static <T> UniTraversal<T> find (final UniTraversal<T> start, final T target)
+    {
+        for (var i = start; i != null; i = i.next()) {
             if (i.value().equals(target)) return i;
         }
         return null;
@@ -117,20 +164,29 @@ public class Traverse
      * @return            element, or null if not found
      * @param <T>         structure element type
      */
-    public static <T> UniIterator<T> findIf (final TraversableUniLinear<T> structure, final Predicate<T> operator)
+    public static <T> UniTraversal<T> findIf (final TraversableUniLinear<T> structure, final Predicate<T> operator)
     {
-        for (var i = structure.forward(); i != null; i = i.next()) {
+        return findIf(structure.forward(),operator);
+    }
+
+    public static <T> UniTraversal<T> findIf (final UniTraversal<T> start, final Predicate<T> operator)
+    {
+        for (var i = start; i != null; i = i.next()) {
             if (operator.test(i.value())) return i;
         }
         return null;
     }
 
-    public static <T> boolean sorted (final TraversableUniLinear<T> structure, final Comparator<T> ordering)
+    public static <T> boolean sorted (final TraversableUniLinear<T> structure, final Comparator<T> comparator)
     {
-        var i = structure.forward();
-        if (i == null) return true;
-        for (var j = i.next(); j != null; i = i.next(), j = j.next()) {
-            if (ordering.compare(i.value(),j.value()) >= 0)
+        return sorted(structure.forward(),comparator);
+    }
+
+    public static <T> boolean sorted (final UniTraversal<T> start, final Comparator<T> comparator)
+    {
+        if (start == null) return true;
+        for (UniTraversal<T> i = start, j = i.next(); j != null; i = i.next(), j = j.next()) {
+            if (comparator.compare(i.value(),j.value()) >= 0)
                 return false;
         }
         return true;
@@ -145,7 +201,12 @@ public class Traverse
      */
     public static <T> void visit (final TraversableUniLinear<T> structure, final Consumer<T> operator)
     {
-        for (var i = structure.forward(); i != null; i = i.next()) {
+        visit(structure.forward(),operator);
+    }
+
+    public static <T> void visit (final UniTraversal<T> start, final Consumer<T> operator)
+    {
+        for (var i = start; i != null; i = i.next()) {
             operator.accept(i.value());
         }
     }

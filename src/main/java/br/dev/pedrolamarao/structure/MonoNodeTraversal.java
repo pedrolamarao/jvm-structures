@@ -15,12 +15,12 @@
 
 package br.dev.pedrolamarao.structure;
 
-record MonoNodeIterator<T>(MonoNode<T> node) implements UniIterator<T>
+record MonoNodeTraversal<T>(MonoNode<T> node) implements UniTraversal<T>
 {
     @Override
-    public UniIterator<T> next ()
+    public UniTraversal<T> next ()
     {
-        return node.link() == null ? null : new MonoNodeIterator<>(node.link());
+        return node.link() == null ? null : new MonoNodeTraversal<>(node.link());
     }
 
     @Override

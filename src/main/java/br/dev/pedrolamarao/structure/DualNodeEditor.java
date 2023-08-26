@@ -39,17 +39,17 @@ public class DualNodeEditor<T> implements EditableUniLinear<T>
     //
 
     @Override
-    public BiIterator<T> forward ()
+    public BiTraversal<T> forward ()
     {
-        return root == null ? null : new DualNodeIterator<>(root);
+        return root == null ? null : new DualNodeLinearTraversal<>(root);
     }
 
     //
 
     @Override
-    public void erase (Iterator<T> position)
+    public void erase (Traversal<T> position)
     {
-        if (! (position instanceof DualNodeIterator<T>(DualNode<T> node)))
+        if (! (position instanceof DualNodeLinearTraversal<T>(DualNode<T> node)))
             throw new RuntimeException("incompatible iterator");
         final var previous = node.first();
         final var next = node.second();
@@ -58,17 +58,17 @@ public class DualNodeEditor<T> implements EditableUniLinear<T>
     }
 
     @Override
-    public void set (Iterator<T> position, T value)
+    public void set (Traversal<T> position, T value)
     {
-        if (! (position instanceof DualNodeIterator<T>(DualNode<T> node)))
+        if (! (position instanceof DualNodeLinearTraversal<T>(DualNode<T> node)))
             throw new RuntimeException("incompatible iterator");
         node.value(value);
     }
 
     @Override
-    public void swap (Iterator<T> x, Iterator<T> y)
+    public void swap (Traversal<T> x, Traversal<T> y)
     {
-        if (! (x instanceof DualNodeIterator<T>(DualNode<T> xx) && y instanceof DualNodeIterator<T>(DualNode<T> yy)))
+        if (! (x instanceof DualNodeLinearTraversal<T>(DualNode<T> xx) && y instanceof DualNodeLinearTraversal<T>(DualNode<T> yy)))
             throw new RuntimeException("incompatible iterator");
         final T tmp = x.value();
         xx.value(yy.value());

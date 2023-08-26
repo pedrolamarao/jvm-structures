@@ -16,7 +16,7 @@
 package br.dev.pedrolamarao.structure;
 
 /**
- * Bidirectional linear-traversable structure.
+ * Linear bidirectional traversable structure.
  *
  * @param <T> element type
  */
@@ -27,5 +27,5 @@ public interface TraversableBiLinear<T> extends TraversableUniLinear<T>
      *
      * @return iterator
      */
-    BiIterator<T> backward ();
+    BiTraversal<T> backward ();
 }

@@ -24,37 +24,13 @@ import java.util.function.Function;
 public class Edit
 {
     /**
-     * Bubble-sort the structure.
-     *
-     * @param structure  editable structure
-     * @param order      sort ordering
-     * @param <T>        structure element type
-     */
-    public static <T> void bubbleSort (EditableUniLinear<T> structure, Comparator<T> order)
-    {
-        boolean sorted;
-        do {
-            sorted = true;
-            var i = structure.forward();
-            if (i == null) break;
-            for (var j = i.next(); i != null && j != null; i = i.next(), j = j.next()) {
-                if (order.compare(i.value(), j.value()) >= 0) {
-                    structure.swap(i, j);
-                    sorted = false;
-                }
-            }
-        }
-        while (! sorted);
-    }
-
-    /**
      * Fill structure with a value.
      *
      * @param structure  editable structure
      * @param value      value
      * @param <T>        structure element type
      */
-    public static <T> void fill (EditableUniLinear<T> structure, T value)
+    public static <T> void fill (final EditableUniLinear<T> structure, final T value)
     {
         for (var i = structure.forward(); i != null; i = i.next()) {
             structure.set(i,value);
@@ -62,17 +38,17 @@ public class Edit
     }
 
     /**
-     * Select-sort the structure.
+     * Sort the structure.
      *
      * @param structure  editable structure
      * @param order      sort ordering
      * @param <T>        structure element type
      */
-    public static <T> void selectSort (EditableUniLinear<T> structure, Comparator<T> order)
+    public static <T> void sort (final EditableUniLinear<T> structure, final Comparator<T> order)
     {
         for (var i = structure.forward(); i != null; i = i.next()) {
             for (var j = i.next(); j != null; j = j.next()) {
-                if (order.compare(i.value(),j.value()) >= 0)
+                if (order.compare(i.value(),j.value()) > 0)
                     structure.swap(i,j);
             }
         }
@@ -85,7 +61,7 @@ public class Edit
      * @param operator   transformation
      * @param <T>        structure element type
      */
-    public static <T> void transform (EditableUniLinear<T> structure, Function<T,T> operator)
+    public static <T> void transform (final EditableUniLinear<T> structure, final Function<T,T> operator)
     {
         for (var i = structure.forward(); i != null; i = i.next()) {
             structure.set(i,operator.apply(i.value()));

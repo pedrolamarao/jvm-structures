@@ -15,17 +15,23 @@
 
 package br.dev.pedrolamarao.structure;
 
-/**
- * Position in unidirectional traversals.
- *
- * @param <T>  element type
- */
-public interface UniIterator<T> extends Iterator<T>
+record DualNodeLinearTraversal<T>(DualNode<T> node) implements BiTraversal<T>
 {
-    /**
-     * Next position.
-     *
-     * @return iterator, or null if end of traversal
-     */
-    UniIterator<T> next ();
+    @Override
+    public BiTraversal<T> next ()
+    {
+        return node.first() == null ? null : new DualNodeLinearTraversal<>(node.first());
+    }
+
+    @Override
+    public BiTraversal<T> previous ()
+    {
+        return node.second() == null ? null : new DualNodeLinearTraversal<>(node.second());
+    }
+
+    @Override
+    public T value ()
+    {
+        return node.value();
+    }
 }

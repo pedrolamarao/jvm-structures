@@ -27,18 +27,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class EditTest
+public class EditObjectTest
 {
     static final int size = 10240;
-
-    @ParameterizedTest
-    @MethodSource("structures")
-    void bubbleSort (EditableUniLinear<Object> structure)
-    {
-        final var ordering = Comparator.comparingInt(Object::hashCode);
-        Edit.bubbleSort(structure,ordering);
-        assertTrue( Traverse.sorted(structure,ordering) );
-    }
 
     @ParameterizedTest
     @MethodSource("structures")
@@ -63,14 +54,14 @@ public class EditTest
 
     @ParameterizedTest
     @MethodSource("structures")
-    void selectSort (EditableUniLinear<Object> structure)
+    void sort (EditableUniLinear<Object> structure)
     {
         final var ordering = Comparator.comparingInt(Object::hashCode);
-        Edit.selectSort(structure,ordering);
+        Edit.sort(structure,ordering);
         assertTrue( Traverse.sorted(structure,ordering) );
     }
 
-    static List<EditableUniLinear<Object>> structures ()
+    List<EditableUniLinear<Object>> structures ()
     {
         final var array = new Object[size];
         for (int i = 0; i != array.length; ++i) array[i] = new Object();
