@@ -15,65 +15,42 @@
 
 package br.dev.pedrolamarao.structure;
 
-import java.lang.reflect.Array;
-
-import static java.util.Objects.requireNonNull;
-
 public class ArrayEditor<T> implements EditableUniLinear<T>, EditableBiLinear<T>
 {
     private int limit;
 
     private T[] root;
 
-    private final Class<? super T> type;
-
-    private ArrayEditor (int limit, T[] root, Class<? super T> type)
+    private ArrayEditor (int limit, T[] root)
     {
         this.root = root;
         this.limit = limit;
-        this.type = type;
     }
 
     /**
      * Create an editable structure copying from this array.
      *
-     * @param type   element class
-     * @param array  array
-     * @return       editable strcuture
-     * @param <U>    element type
+     * @param <U>   element type
+     * @param array array
+     * @return editable strcuture
      */
-    public static <U> ArrayEditor<U> from (Class<? super U> type, U[] array)
+    public static <U> ArrayEditor<U> from (U[] array)
     {
-        return new ArrayEditor<>(array.length, array.clone(), requireNonNull(type));
+        return new ArrayEditor<>(array.length, array);
     }
 
     /**
      * Create an editable structure copying from this array.
      *
-     * @param type   element class
-     * @param array  array
-     * @param limit  array limit
-     * @return       editable structure
-     * @param <U>    element type
+     * @param <U>   element type
+     * @param array array
+     * @param limit array limit
+     * @return editable structure
      */
-    public static <U> ArrayEditor<U> from (Class<? super U> type, U[] array, int limit)
+    public static <U> ArrayEditor<U> from (U[] array, int limit)
     {
         if (limit > array.length) throw new ArrayIndexOutOfBoundsException();
-        return new ArrayEditor<>(limit, array.clone(), requireNonNull(type));
-    }
-
-    /**
-     * Create an editable structure with this initial capacity.
-     *
-     * @param type      element class
-     * @param capacity  initial capacity
-     * @return          editable structure
-     * @param <U>       element type
-     */
-    @SuppressWarnings("unchecked")
-    public static <U> ArrayEditor<U> of (Class<? super U> type, int capacity)
-    {
-        return new ArrayEditor<>(0, (U[])Array.newInstance(type,capacity), requireNonNull(type));
+        return new ArrayEditor<>(limit, array);
     }
 
     //

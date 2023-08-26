@@ -70,7 +70,7 @@ public class EditObjectTest
         for (int i = 0; i != size; ++i) node = new MonoNode<>(node, new Object());
 
         return List.of(
-            ArrayEditor.from(Object.class, array),
+            ArrayEditor.from(array),
             MonoNodeEditor.of(node)
         );
     }

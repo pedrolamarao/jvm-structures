@@ -69,7 +69,7 @@ public class EditIntTest
         for (int i = 0; i != size; ++i) node = new MonoNode<>(node,-i);
 
         return List.of(
-            ArrayEditor.from(Integer.class,array),
+            ArrayEditor.from(array),
             MonoNodeEditor.of(node)
         );
     }
