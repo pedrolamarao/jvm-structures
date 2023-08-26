@@ -17,31 +17,39 @@ package br.dev.pedrolamarao.structure;
 
 import static java.util.Objects.requireNonNull;
 
-public class EditableDualNodes<T> implements EditableUniLinear<T>
+public class MonoNodeEditor<T> implements EditableUniLinear<T>
 {
-    private DualNode<T> root;
+    private MonoNode<T> root;
 
-    private EditableDualNodes (DualNode<T> root)
+    private MonoNodeEditor (MonoNode<T> root)
     {
         this.root = root;
     }
 
-    public static <U> EditableDualNodes<U> empty ()
+    public static <U> MonoNodeEditor<U> empty ()
     {
-        return new EditableDualNodes<>(null);
+        return new MonoNodeEditor<>(null);
     }
 
-    public static <U> EditableDualNodes<U> of (DualNode<U> root)
+    public static <U> MonoNodeEditor<U> of (MonoNode<U> root)
     {
-        return new EditableDualNodes<>( requireNonNull(root) );
+        return new MonoNodeEditor<>( requireNonNull(root) );
     }
 
     //
 
     @Override
-    public BiIterator<T> forward ()
+    public UniIterator<T> forward ()
     {
-        return root == null ? null : new DualNodeIterator<>(root);
+        return root == null ? null : new MonoNodeIterator<>(root);
+    }
+
+    MonoNode<T> previous (MonoNode<T> target)
+    {
+        MonoNode<T> node = root;
+        while (node != null && node.link() != target)
+            node = node.link();
+        return node;
     }
 
     //
@@ -49,18 +57,18 @@ public class EditableDualNodes<T> implements EditableUniLinear<T>
     @Override
     public void erase (Iterator<T> position)
     {
-        if (! (position instanceof DualNodeIterator<T>(DualNode<T> node)))
-            throw new RuntimeException("incompatible iterator");
-        final var previous = node.first();
-        final var next = node.second();
-        previous.second(next);
-        next.first(previous);
+        if (! (position instanceof MonoNodeIterator<T>(MonoNode<T> node)))
+            throw new RuntimeException("incompatible position");
+        final var previous = previous(node);
+        if (previous == null)
+            throw new RuntimeException("invalid position");
+        previous.link(node.link());
     }
 
     @Override
     public void set (Iterator<T> position, T value)
     {
-        if (! (position instanceof DualNodeIterator<T>(DualNode<T> node)))
+        if (! (position instanceof MonoNodeIterator<T>(MonoNode<T> node)))
             throw new RuntimeException("incompatible iterator");
         node.value(value);
     }
@@ -68,7 +76,7 @@ public class EditableDualNodes<T> implements EditableUniLinear<T>
     @Override
     public void swap (Iterator<T> x, Iterator<T> y)
     {
-        if (! (x instanceof DualNodeIterator<T>(DualNode<T> xx) && y instanceof DualNodeIterator<T>(DualNode<T> yy)))
+        if (! (x instanceof MonoNodeIterator<T>(MonoNode<T> xx) && y instanceof MonoNodeIterator<T>(MonoNode<T> yy)))
             throw new RuntimeException("incompatible iterator");
         final T tmp = x.value();
         xx.value(yy.value());

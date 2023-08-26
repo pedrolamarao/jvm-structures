@@ -85,8 +85,8 @@ public class TraverseEmptyTest
     static List<TraversableUniLinear<Object>> structures ()
     {
         return List.of(
-            TraversableArray.empty(),
-            TraversableMonoNodes.empty()
+            ArrayTraveller.empty(),
+            MonoNodeTraveller.empty()
         );
     }
 }

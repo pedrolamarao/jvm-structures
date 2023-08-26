@@ -58,8 +58,8 @@ public class EditEmptyTest
     static List<EditableUniLinear<Object>> structures ()
     {
         return List.of(
-            EditableArray.from(Object.class, new Object[0]),
-            EditableMonoNodes.empty()
+            ArrayEditor.from(Object.class, new Object[0]),
+            MonoNodeEditor.empty()
         );
     }
 }

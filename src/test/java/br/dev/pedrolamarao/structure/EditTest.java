@@ -79,8 +79,8 @@ public class EditTest
         for (int i = 0; i != size; ++i) node = new MonoNode<>(node, new Object());
 
         return List.of(
-            EditableArray.from(Object.class, array),
-            EditableMonoNodes.of(node)
+            ArrayEditor.from(Object.class, array),
+            MonoNodeEditor.of(node)
         );
     }
 }

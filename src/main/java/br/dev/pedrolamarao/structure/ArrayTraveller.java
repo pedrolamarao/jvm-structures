@@ -17,21 +17,21 @@ package br.dev.pedrolamarao.structure;
 
 import static java.util.Objects.requireNonNull;
 
-public record TraversableDualNodes<T>(DualNode<T> root) implements TraversableUniLinear<T>
+public record ArrayTraveller<T>(T[] root, int limit) implements TraversableUniLinear<T>
 {
-    public static <U> TraversableDualNodes<U> empty ()
+    public static <U> ArrayTraveller<U> empty ()
     {
-        return new TraversableDualNodes<>(null);
+        return new ArrayTraveller<>(null, 0);
     }
 
-    public static <U> TraversableDualNodes<U> of (DualNode<U> node)
+    public static <U> ArrayTraveller<U> of (U[] array)
     {
-        requireNonNull(node);
-        return new TraversableDualNodes<>(node);
+        requireNonNull(array);
+        return new ArrayTraveller<>(array, array.length);
     }
 
-    public BiIterator<T> forward ()
+    public UniIterator<T> forward ()
     {
-        return root == null ? null : new DualNodeIterator<>(root);
+        return limit == 0 ? null : new ArrayIterator<>(root, 0, limit - 1);
     }
 }

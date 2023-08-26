@@ -93,8 +93,8 @@ public class TraverseTest
         for (int i = 0; i != size; ++i) node = new MonoNode<>(node, new Object());
 
         return List.of(
-            TraversableArray.of(array),
-            TraversableMonoNodes.of(node)
+            ArrayTraveller.of(array),
+            MonoNodeTraveller.of(node)
         );
     }
 }
