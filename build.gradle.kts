@@ -5,8 +5,10 @@ plugins {
 group = "br.dev.pedrolamarao.jvm"
 version = "1.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(20)
+    }
 }
 
 dependencies {
@@ -15,7 +17,16 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
-tasks.test {
+repositories {
+    mavenCentral()
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.compilerArgs = listOf("--enable-preview")
+}
+
+tasks.withType<Test>().configureEach {
+    jvmArgs = listOf("--enable-preview")
     useJUnitPlatform()
 }
 

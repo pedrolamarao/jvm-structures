@@ -1,34 +1,62 @@
 package br.dev.pedrolamarao.structure;
 
+import static java.util.Objects.requireNonNull;
+
 public class EditableDualNodes<T> implements EditableUniLinear<T>
 {
-    DualNode<T> root;
+    private DualNode<T> root;
+
+    private EditableDualNodes (DualNode<T> root)
+    {
+        this.root = root;
+    }
+
+    public static <U> EditableDualNodes<U> empty ()
+    {
+        return new EditableDualNodes<>(null);
+    }
+
+    public static <U> EditableDualNodes<U> of (DualNode<U> root)
+    {
+        return new EditableDualNodes<>( requireNonNull(root) );
+    }
 
     //
 
     @Override
     public BiIterator<T> forward ()
     {
-        return new IterableDualNode<>(root);
+        return root == null ? null : new DualNodeIterator<>(root);
     }
 
     //
 
     @Override
+    public void erase (Iterator<T> position)
+    {
+        if (! (position instanceof DualNodeIterator<T>(DualNode<T> node)))
+            throw new RuntimeException("incompatible iterator");
+        final var previous = node.first();
+        final var next = node.second();
+        previous.second(next);
+        next.first(previous);
+    }
+
+    @Override
     public void set (Iterator<T> position, T value)
     {
-        if (! (position instanceof IterableDualNode<T> p))
+        if (! (position instanceof DualNodeIterator<T>(DualNode<T> node)))
             throw new RuntimeException("incompatible iterator");
-        p.node().value(value);
+        node.value(value);
     }
 
     @Override
     public void swap (Iterator<T> x, Iterator<T> y)
     {
-        if (! (x instanceof IterableDualNode<T> xx && y instanceof IterableDualNode<T> yy))
+        if (! (x instanceof DualNodeIterator<T>(DualNode<T> xx) && y instanceof DualNodeIterator<T>(DualNode<T> yy)))
             throw new RuntimeException("incompatible iterator");
         final T tmp = x.value();
-        xx.node().value(yy.node().value());
-        yy.node().value(tmp);
+        xx.value(yy.value());
+        yy.value(tmp);
     }
 }

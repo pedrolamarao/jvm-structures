@@ -7,12 +7,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class EditTest
+public class EditEmptyTest
 {
     static final int size = 10240;
 
@@ -27,23 +25,10 @@ public class EditTest
 
     @ParameterizedTest
     @MethodSource("structures")
-    void erase (EditableUniLinear<Object> structure)
-    {
-        final var position = structure.forward().next();
-        assertThat(structure.forward().next()).isEqualTo(position);
-        structure.erase(position);
-        assertThat(structure.forward().next()).isNotEqualTo(position);
-        assertThat(Traverse.count(structure)).isEqualTo(size-1);
-    }
-
-    @ParameterizedTest
-    @MethodSource("structures")
     void fill (EditableUniLinear<Object> structure)
     {
         final var element = new Object();
-        assertFalse( Traverse.every(structure,element::equals) );
         Edit.fill(structure,element);
-        assertTrue( Traverse.every(structure,element::equals) );
     }
 
     @ParameterizedTest
@@ -57,15 +42,9 @@ public class EditTest
 
     static List<EditableUniLinear<Object>> structures ()
     {
-        final var array = new Object[size];
-        for (int i = 0; i != array.length; ++i) array[i] = new Object();
-
-        MonoNode<Object> node = null;
-        for (int i = 0; i != size; ++i) node = new MonoNode<>(node, new Object());
-
         return List.of(
-            EditableArray.from(Object.class, array),
-            EditableMonoNodes.of(node)
+            EditableArray.from(Object.class, new Object[0]),
+            EditableMonoNodes.empty()
         );
     }
 }

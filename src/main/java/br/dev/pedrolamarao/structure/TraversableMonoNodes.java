@@ -17,6 +17,6 @@ public record TraversableMonoNodes<T>(MonoNode<T> root) implements TraversableUn
 
     public UniIterator<T> forward ()
     {
-        return root == null ? null : new IterableMonoNode<>(root);
+        return root == null ? null : new MonoNodeIterator<>(root);
     }
 }

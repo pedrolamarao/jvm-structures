@@ -17,6 +17,6 @@ public record TraversableArray<T>(T[] root, int limit) implements TraversableUni
 
     public UniIterator<T> forward ()
     {
-        return limit == 0 ? null : new IterableArray<>(root, 0, limit - 1);
+        return limit == 0 ? null : new ArrayIterator<>(root, 0, limit - 1);
     }
 }

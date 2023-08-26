@@ -7,6 +7,8 @@ package br.dev.pedrolamarao.structure;
  */
 public interface Editable<T>
 {
+    void erase (Iterator<T> position);
+
     /**
      * Set value at position.
      *

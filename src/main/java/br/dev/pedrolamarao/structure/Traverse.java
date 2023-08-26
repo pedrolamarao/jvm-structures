@@ -1,5 +1,6 @@
 package br.dev.pedrolamarao.structure;
 
+import java.util.Comparator;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -107,6 +108,17 @@ public class Traverse
             if (operator.test(i.value())) return i;
         }
         return null;
+    }
+
+    public static <T> boolean sorted (final TraversableUniLinear<T> structure, final Comparator<T> ordering)
+    {
+        var i = structure.forward();
+        if (i == null) return true;
+        for (var j = i.next(); j != null; i = i.next(), j = j.next()) {
+            if (ordering.compare(i.value(),j.value()) >= 0)
+                return false;
+        }
+        return true;
     }
 
     /**

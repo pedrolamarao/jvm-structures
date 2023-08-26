@@ -17,6 +17,6 @@ public record TraversableDualNodes<T>(DualNode<T> root) implements TraversableUn
 
     public BiIterator<T> forward ()
     {
-        return root == null ? null : new IterableDualNode<>(root);
+        return root == null ? null : new DualNodeIterator<>(root);
     }
 }

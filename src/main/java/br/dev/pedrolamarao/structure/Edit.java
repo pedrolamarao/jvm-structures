@@ -20,7 +20,9 @@ public class Edit
         boolean sorted;
         do {
             sorted = true;
-            for (UniIterator<T> i = structure.forward(), j = i.next(); i != null && j != null; i = i.next(), j = j.next()) {
+            var i = structure.forward();
+            if (i == null) break;
+            for (var j = i.next(); i != null && j != null; i = i.next(), j = j.next()) {
                 if (order.compare(i.value(), j.value()) >= 0) {
                     structure.swap(i, j);
                     sorted = false;

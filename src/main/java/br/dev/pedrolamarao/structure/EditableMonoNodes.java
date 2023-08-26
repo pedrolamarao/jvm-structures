@@ -4,21 +4,21 @@ import static java.util.Objects.requireNonNull;
 
 public class EditableMonoNodes<T> implements EditableUniLinear<T>
 {
-    MonoNode<T> root;
+    private MonoNode<T> root;
 
-    public EditableMonoNodes ()
+    private EditableMonoNodes (MonoNode<T> root)
     {
-        this.root = null;
+        this.root = root;
     }
 
-    public EditableMonoNodes (MonoNode<T> root)
+    public static <U> EditableMonoNodes<U> empty ()
     {
-        this.root = requireNonNull(root);
+        return new EditableMonoNodes<>(null);
     }
 
     public static <U> EditableMonoNodes<U> of (MonoNode<U> root)
     {
-        return new EditableMonoNodes<>(root);
+        return new EditableMonoNodes<>( requireNonNull(root) );
     }
 
     //
@@ -26,26 +26,45 @@ public class EditableMonoNodes<T> implements EditableUniLinear<T>
     @Override
     public UniIterator<T> forward ()
     {
-        return new IterableMonoNode<>(root);
+        return root == null ? null : new MonoNodeIterator<>(root);
+    }
+
+    MonoNode<T> previous (MonoNode<T> target)
+    {
+        MonoNode<T> node = root;
+        while (node != null && node.link() != target)
+            node = node.link();
+        return node;
     }
 
     //
 
     @Override
+    public void erase (Iterator<T> position)
+    {
+        if (! (position instanceof MonoNodeIterator<T>(MonoNode<T> node)))
+            throw new RuntimeException("incompatible position");
+        final var previous = previous(node);
+        if (previous == null)
+            throw new RuntimeException("invalid position");
+        previous.link(node.link());
+    }
+
+    @Override
     public void set (Iterator<T> position, T value)
     {
-        if (! (position instanceof IterableMonoNode<T> p))
+        if (! (position instanceof MonoNodeIterator<T>(MonoNode<T> node)))
             throw new RuntimeException("incompatible iterator");
-        p.node().value(value);
+        node.value(value);
     }
 
     @Override
     public void swap (Iterator<T> x, Iterator<T> y)
     {
-        if (! (x instanceof IterableMonoNode<T> xx && y instanceof IterableMonoNode<T> yy))
+        if (! (x instanceof MonoNodeIterator<T>(MonoNode<T> xx) && y instanceof MonoNodeIterator<T>(MonoNode<T> yy)))
             throw new RuntimeException("incompatible iterator");
         final T tmp = x.value();
-        xx.node().value(yy.node().value());
-        yy.node().value(tmp);
+        xx.value(yy.value());
+        yy.value(tmp);
     }
 }
