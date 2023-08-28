@@ -2,6 +2,12 @@ package br.dev.pedrolamarao.structure2;
 
 record BiTreeArrayNode<T> (T[] array, int position) implements BiTreeNode<T>
 {
+    public BiTreeNode<T> parent ()
+    {
+        final int p = (position - 1) / 2;
+        return p < 0 || array[p] == null ? null : new BiTreeArrayNode<>(array,p);
+    }
+
     @Override
     public BiTreeNode<T> left ()
     {
