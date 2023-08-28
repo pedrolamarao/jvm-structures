@@ -21,9 +21,9 @@ class RandomIntegerLineTest
 
     @ParameterizedTest
     @MethodSource("lines")
-    void count (UniLineNode<Integer> node)
+    void distance (UniLineNode<Integer> node)
     {
-        assertThat( Lines.count(node) ).isEqualTo(size);
+        assertThat( Lines.distance(node,null) ).isEqualTo(size);
     }
 
     @ParameterizedTest

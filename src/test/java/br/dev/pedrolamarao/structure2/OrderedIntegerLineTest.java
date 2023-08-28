@@ -22,7 +22,7 @@ class OrderedIntegerLineTest
     @MethodSource("lines")
     void count (UniLineNode<Integer> node)
     {
-        assertThat( Lines.count(node) ).isEqualTo(size);
+        assertThat( Lines.count(node,16) ).isEqualTo(1);
     }
 
     @ParameterizedTest
@@ -30,6 +30,13 @@ class OrderedIntegerLineTest
     void countIf (UniLineNode<Integer> node)
     {
         assertThat( Lines.countIf(node, it -> it % 2 == 0) ).isEqualTo(size/2);
+    }
+
+    @ParameterizedTest
+    @MethodSource("lines")
+    void distance (UniLineNode<Integer> node)
+    {
+        assertThat( Lines.distance(node,null) ).isEqualTo(size);
     }
 
     @ParameterizedTest

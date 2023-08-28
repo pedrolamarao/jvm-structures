@@ -1,16 +1,27 @@
 package br.dev.pedrolamarao.structure2;
 
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 class Lines
 {
-    static <T> long count (UniLineNode<T> first)
+    static <T,U> U accumulate (UniLineNode<T> first, U initial, BiFunction<U,T,U> accumulator)
+    {
+        var tmp = initial;
+        for (var i = first; i != null; i = i.next()) {
+            tmp = accumulator.apply(tmp,i.value());
+        }
+        return tmp;
+    }
+
+    static <T> long count (UniLineNode<T> first, T value)
     {
         long counter = 0;
         for (var i = first; i != null; i = i.next()) {
-            ++counter;
+            if (Objects.equals(value,i.value()))
+                ++counter;
         }
         return counter;
     }
@@ -21,6 +32,15 @@ class Lines
         for (var i = first; i != null; i = i.next()) {
             if (predicate.test(i.value()))
                 ++counter;
+        }
+        return counter;
+    }
+
+    static <T> long distance (UniLineNode<T> first, UniLineNode<T> last)
+    {
+        long counter = 0;
+        for (var i = first; i != last; i = i.next()) {
+            ++counter;
         }
         return counter;
     }
