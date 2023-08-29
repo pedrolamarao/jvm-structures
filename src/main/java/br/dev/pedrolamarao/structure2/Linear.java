@@ -1,5 +1,6 @@
 package br.dev.pedrolamarao.structure2;
 
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -140,6 +141,23 @@ class Linear
                 return i;
         }
         return null;
+    }
+
+    /**
+     * True if the structure is sorted by a comparator.
+     * @param first
+     * @param comparator
+     * @return
+     * @param <T>
+     */
+    static <T> boolean sorted (UniLinearCursor<T> first, Comparator<T> comparator)
+    {
+        if (first == null) return true;
+        for (UniLinearCursor<T> i = first, j = i.next(); j != null; i = i.next(), j = j.next()) {
+            if (comparator.compare(i.value(),j.value()) > 0)
+                return false;
+        }
+        return true;
     }
 
     /**

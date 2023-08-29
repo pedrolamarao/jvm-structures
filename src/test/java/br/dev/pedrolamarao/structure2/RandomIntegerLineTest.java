@@ -5,6 +5,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,24 +22,31 @@ class RandomIntegerLineTest
 
     @ParameterizedTest
     @MethodSource("lines")
-    void distance (UniLinearCursor<Integer> node)
+    void distance (UniLinearCursor<Integer> cursor)
     {
-        assertThat( Linear.distance(node,null) ).isEqualTo(size);
+        assertThat( Linear.distance(cursor,null) ).isEqualTo(size);
     }
 
     @ParameterizedTest
     @MethodSource("lines")
-    void find (UniLinearCursor<Integer> node)
+    void find (UniLinearCursor<Integer> cursor)
     {
-        assertThat( Linear.find(node,array[size-1]) ).isNotNull();
+        assertThat( Linear.find(cursor,array[size-1]) ).isNotNull();
     }
 
     @ParameterizedTest
     @MethodSource("lines")
-    void visit (UniLinearCursor<Integer> node)
+    void sorted (UniLinearCursor<Integer> cursor)
+    {
+        assertThat( Linear.sorted(cursor, Comparator.naturalOrder()) ).isFalse();
+    }
+
+    @ParameterizedTest
+    @MethodSource("lines")
+    void visit (UniLinearCursor<Integer> cursor)
     {
         final var counter = new AtomicInteger();
-        Linear.visit(node, it->counter.incrementAndGet());
+        Linear.visit(cursor, it->counter.incrementAndGet());
         assertThat(counter).hasValue(size);
     }
 

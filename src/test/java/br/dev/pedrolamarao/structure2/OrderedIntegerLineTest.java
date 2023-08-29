@@ -5,6 +5,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,38 +21,52 @@ class OrderedIntegerLineTest
 
     @ParameterizedTest
     @MethodSource("lines")
-    void count (UniLinearCursor<Integer> node)
+    void any (UniLinearCursor<Integer> cursor)
     {
-        assertThat( Linear.count(node,16) ).isEqualTo(1);
+        assertThat( Linear.any(cursor,it -> it == 1) ).isTrue();
     }
 
     @ParameterizedTest
     @MethodSource("lines")
-    void countIf (UniLinearCursor<Integer> node)
+    void count (UniLinearCursor<Integer> cursor)
     {
-        assertThat( Linear.countIf(node, it -> it % 2 == 0) ).isEqualTo(size/2);
+        assertThat( Linear.count(cursor,16) ).isEqualTo(1);
     }
 
     @ParameterizedTest
     @MethodSource("lines")
-    void distance (UniLinearCursor<Integer> node)
+    void countIf (UniLinearCursor<Integer> cursor)
     {
-        assertThat( Linear.distance(node,null) ).isEqualTo(size);
+        assertThat( Linear.countIf(cursor, it -> it % 2 == 0) ).isEqualTo(size/2);
     }
 
     @ParameterizedTest
     @MethodSource("lines")
-    void find (UniLinearCursor<Integer> node)
+    void distance (UniLinearCursor<Integer> cursor)
     {
-        assertThat( Linear.find(node,array[size-1]) ).isNotNull();
+        assertThat( Linear.distance(cursor,null) ).isEqualTo(size);
     }
 
     @ParameterizedTest
     @MethodSource("lines")
-    void visit (UniLinearCursor<Integer> node)
+    void find (UniLinearCursor<Integer> cursor)
+    {
+        assertThat( Linear.find(cursor,array[size-1]) ).isNotNull();
+    }
+
+    @ParameterizedTest
+    @MethodSource("lines")
+    void sorted (UniLinearCursor<Integer> cursor)
+    {
+        assertThat( Linear.sorted(cursor, Comparator.naturalOrder()) ).isTrue();
+    }
+
+    @ParameterizedTest
+    @MethodSource("lines")
+    void visit (UniLinearCursor<Integer> cursor)
     {
         final var counter = new AtomicInteger();
-        Linear.visit(node, it->counter.incrementAndGet());
+        Linear.visit(cursor, it->counter.incrementAndGet());
         assertThat(counter).hasValue(size);
     }
 
