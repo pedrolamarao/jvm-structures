@@ -143,6 +143,38 @@ class Linear
         return null;
     }
 
+    static <T> T maximum (UniLinearCursor<T> first, Comparator<T> comparator)
+    {
+        if (first == null) return null;
+        T tmp = first.value();
+        for (var i = first.next(); i != null; i = i.next()) {
+            if (comparator.compare(tmp,i.value()) < 0)
+                tmp = i.value();
+        }
+        return tmp;
+    }
+
+    static <T extends Comparable<T>> T maximum (UniLinearCursor<T> first)
+    {
+        return maximum(first,Comparator.naturalOrder());
+    }
+
+    static <T> T minimum (UniLinearCursor<T> first, Comparator<T> comparator)
+    {
+        if (first == null) return null;
+        T tmp = first.value();
+        for (var i = first.next(); i != null; i = i.next()) {
+            if (comparator.compare(i.value(),tmp) < 0)
+                tmp = i.value();
+        }
+        return tmp;
+    }
+
+    static <T extends Comparable<T>> T minimum (UniLinearCursor<T> first)
+    {
+        return minimum(first,Comparator.naturalOrder());
+    }
+
     /**
      * True if the structure is sorted by a comparator.
      * @param first
@@ -158,6 +190,11 @@ class Linear
                 return false;
         }
         return true;
+    }
+
+    static <T extends Comparable<T>> boolean sorted (UniLinearCursor<T> first)
+    {
+        return sorted(first,Comparator.naturalOrder());
     }
 
     /**

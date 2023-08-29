@@ -26,4 +26,9 @@ class BiBranched
         }
         return i;
     }
+
+    static <T extends Comparable<T>> BiBranchedCursor<T> findSorted (BiBranchedCursor<T> first, T value)
+    {
+        return findSorted(first,value,Comparator.naturalOrder());
+    }
 }

@@ -56,9 +56,23 @@ class OrderedIntegerLineTest
 
     @ParameterizedTest
     @MethodSource("lines")
+    void maximum (UniLinearCursor<Integer> cursor)
+    {
+        assertThat( Linear.maximum(cursor,Comparator.naturalOrder()) ).isEqualTo(array[array.length-1]);
+    }
+
+    @ParameterizedTest
+    @MethodSource("lines")
+    void minimum (UniLinearCursor<Integer> cursor)
+    {
+        assertThat( Linear.minimum(cursor,Comparator.naturalOrder()) ).isEqualTo(array[0]);
+    }
+
+    @ParameterizedTest
+    @MethodSource("lines")
     void sorted (UniLinearCursor<Integer> cursor)
     {
-        assertThat( Linear.sorted(cursor, Comparator.naturalOrder()) ).isTrue();
+        assertThat( Linear.sorted(cursor) ).isTrue();
     }
 
     @ParameterizedTest

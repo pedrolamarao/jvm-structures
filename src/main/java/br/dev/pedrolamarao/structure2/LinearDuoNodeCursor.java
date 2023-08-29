@@ -5,18 +5,18 @@ package br.dev.pedrolamarao.structure2;
  * @param node
  * @param <T> element type
  */
-record BiLinearDuoNodeCursor<T> (DuoNode<T> node) implements BiLinearCursor<T>
+record LinearDuoNodeCursor<T> (DuoNode<T> node) implements BiLinearCursor<T>
 {
     @Override
     public BiLinearCursor<T> next ()
     {
-        return node.first() == null ? null : new BiLinearDuoNodeCursor<>(node.first());
+        return node.first() == null ? null : new LinearDuoNodeCursor<>(node.first());
     }
 
     @Override
     public BiLinearCursor<T> previous ()
     {
-        return node.second() == null ? null : new BiLinearDuoNodeCursor<>(node.second());
+        return node.second() == null ? null : new LinearDuoNodeCursor<>(node.second());
     }
 
     @Override
