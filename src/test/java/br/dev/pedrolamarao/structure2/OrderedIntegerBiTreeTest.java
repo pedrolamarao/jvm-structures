@@ -19,7 +19,7 @@ class OrderedIntegerBiTreeTest
     static final int size = 15;
 
     @ParameterizedTest
-    @MethodSource("heaps")
+    @MethodSource("trees")
     void find (BiBranchedCursor<Integer> node)
     {
         assertThat( BiBranched.findSorted(node, 8, Comparator.naturalOrder()) ).isNotNull();
@@ -28,7 +28,7 @@ class OrderedIntegerBiTreeTest
         assertThat( BiBranched.findSorted(node, 21, Comparator.naturalOrder()) ).isNull();
     }
 
-    List<BiBranchedCursor<Integer>> heaps ()
+    List<BiBranchedCursor<Integer>> trees ()
     {
         return List.of(
             new BiBranchedArrayCursor<>(array.clone(),0)
