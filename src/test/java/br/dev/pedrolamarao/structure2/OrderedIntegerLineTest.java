@@ -20,49 +20,49 @@ class OrderedIntegerLineTest
 
     @ParameterizedTest
     @MethodSource("lines")
-    void count (UniLineNode<Integer> node)
+    void count (UniLinearCursor<Integer> node)
     {
-        assertThat( Lines.count(node,16) ).isEqualTo(1);
+        assertThat( Linear.count(node,16) ).isEqualTo(1);
     }
 
     @ParameterizedTest
     @MethodSource("lines")
-    void countIf (UniLineNode<Integer> node)
+    void countIf (UniLinearCursor<Integer> node)
     {
-        assertThat( Lines.countIf(node, it -> it % 2 == 0) ).isEqualTo(size/2);
+        assertThat( Linear.countIf(node, it -> it % 2 == 0) ).isEqualTo(size/2);
     }
 
     @ParameterizedTest
     @MethodSource("lines")
-    void distance (UniLineNode<Integer> node)
+    void distance (UniLinearCursor<Integer> node)
     {
-        assertThat( Lines.distance(node,null) ).isEqualTo(size);
+        assertThat( Linear.distance(node,null) ).isEqualTo(size);
     }
 
     @ParameterizedTest
     @MethodSource("lines")
-    void find (UniLineNode<Integer> node)
+    void find (UniLinearCursor<Integer> node)
     {
-        assertThat( Lines.find(node,array[size-1]) ).isNotNull();
+        assertThat( Linear.find(node,array[size-1]) ).isNotNull();
     }
 
     @ParameterizedTest
     @MethodSource("lines")
-    void visit (UniLineNode<Integer> node)
+    void visit (UniLinearCursor<Integer> node)
     {
         final var counter = new AtomicInteger();
-        Lines.visit(node, it->counter.incrementAndGet());
+        Linear.visit(node, it->counter.incrementAndGet());
         assertThat(counter).hasValue(size);
     }
 
-    List<UniLineNode<Integer>> lines ()
+    List<UniLinearCursor<Integer>> lines ()
     {
         MonoNode<Integer> node = null;
         for (int j = size - 1; j >= 0; --j) node = new MonoNode<>(node,array[j]);
 
         return List.of(
-            new LineArrayNode<>(array.clone(),0),
-            node
+            new LinearArrayCursor<>(array.clone(),0),
+            new LinearMonoNodeCursor<>(node)
         );
     }
 

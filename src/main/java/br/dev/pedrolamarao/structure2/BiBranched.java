@@ -2,9 +2,20 @@ package br.dev.pedrolamarao.structure2;
 
 import java.util.Comparator;
 
-class BiTrees
+/**
+ * Algorithms on binary branched structures.
+ */
+class BiBranched
 {
-    static <T> BiTreeNode<T> findSorted (BiTreeNode<T> first, T value, Comparator<T> comparator)
+    /**
+     * Find on a sorted structure.
+     * @param first
+     * @param value
+     * @param comparator
+     * @return
+     * @param <T>
+     */
+    static <T> BiBranchedCursor<T> findSorted (BiBranchedCursor<T> first, T value, Comparator<T> comparator)
     {
         var i = first;
         while (i != null) {

@@ -20,18 +20,18 @@ class OrderedIntegerBiTreeTest
 
     @ParameterizedTest
     @MethodSource("heaps")
-    void find (BiTreeNode<Integer> node)
+    void find (BiBranchedCursor<Integer> node)
     {
-        assertThat( BiTrees.findSorted(node, 8, Comparator.naturalOrder()) ).isNotNull();
-        assertThat( BiTrees.findSorted(node, 6, Comparator.naturalOrder()) ).isNotNull();
-        assertThat( BiTrees.findSorted(node, 13, Comparator.naturalOrder()) ).isNotNull();
-        assertThat( BiTrees.findSorted(node, 21, Comparator.naturalOrder()) ).isNull();
+        assertThat( BiBranched.findSorted(node, 8, Comparator.naturalOrder()) ).isNotNull();
+        assertThat( BiBranched.findSorted(node, 6, Comparator.naturalOrder()) ).isNotNull();
+        assertThat( BiBranched.findSorted(node, 13, Comparator.naturalOrder()) ).isNotNull();
+        assertThat( BiBranched.findSorted(node, 21, Comparator.naturalOrder()) ).isNull();
     }
 
-    List<BiTreeNode<Integer>> heaps ()
+    List<BiBranchedCursor<Integer>> heaps ()
     {
         return List.of(
-            new BiTreeArrayNode<>(array.clone(),0)
+            new BiBranchedArrayCursor<>(array.clone(),0)
         );
     }
 
