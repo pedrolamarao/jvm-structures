@@ -13,8 +13,40 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-module br.dev.pedrolamarao.structures
+package br.dev.pedrolamarao.structure;
+
+/**
+ * Structural root with one link.
+ */
+public class UniNode<T>
 {
-    exports br.dev.pedrolamarao.structure;
-    exports br.dev.pedrolamarao.structure.application;
+    private UniNode<T> link;
+
+    private T value;
+
+    public UniNode (UniNode<T> link, T value)
+    {
+        this.link = link;
+        this.value = value;
+    }
+
+    public UniNode<T> link ()
+    {
+        return link;
+    }
+
+    public void link (UniNode<T> link)
+    {
+        this.link = link;
+    }
+
+    public T value ()
+    {
+        return value;
+    }
+
+    public void value (T value)
+    {
+        this.value = value;
+    }
 }
