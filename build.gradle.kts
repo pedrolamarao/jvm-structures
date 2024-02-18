@@ -7,7 +7,7 @@ version = "1.0-SNAPSHOT"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(20)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -31,5 +31,5 @@ tasks.withType<Test>().configureEach {
 }
 
 tasks.wrapper.configure {
-    gradleVersion = "8.3"
+    gradleVersion = "8.6"
 }
